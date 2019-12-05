@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ecommerce.Models.Categoria>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="page-header header-filter" data-parallax="true" filter-color="rose" style="background-image: url('/Content/assets/img/bg6.jpg');">
+    <div class="container">
+
+        <div class="row title-row">
+            <div class="col-md-4 ml-auto">
+                <a href="@Url.Action("Index", "ListaDeseos")" class="btn btn-white float-right"><i class="material-icons">remove_red_eye</i> Ver lista de deseos</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section section-gray">
+    <div class="container">
+        <div class="main main-raised main-product">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <h2>Index</h2>
+
+                    <p>
+                        @Html.ActionLink("Create New", "Create")
+                    </p>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nombre)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.nombre)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.categoria_id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.categoria_id }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.categoria_id })
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+

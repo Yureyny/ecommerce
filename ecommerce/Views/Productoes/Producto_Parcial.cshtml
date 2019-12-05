@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ecommerce.Models.Producto>
+
+@foreach (var item in Model)
+{
+
+    <div class="col-md-4">
+        <div class="card card-product card-plain no-shadow" data-colored-shadow="false">
+            <div class="card-header card-header-image">
+                <a href="@Url.Action("Producto", "Productoes",new { id=item.producto_id })">
+                    <img class="view_producto" producto_id="@item.producto_id" src="@Url.Action("getImage","Productoes",new { id=item.producto_id})" alt="...">
+               
+                </a>
+            </div>
+            <div class="card-body">
+                <a href="@Url.Action("Producto", "Productoes",new { id=item.producto_id })">
+                    <h4 class="card-title"> @Html.DisplayFor(modelItem => item.nombre)</h4>
+                </a>
+
+
+                <p class="description">
+                    <label><strong>Size: &nbsp;</strong> </label><span class="badge badge-pill badge-primary">   @Html.DisplayFor(modelItem => item.size)</span>
+                    <label><strong>Marca:  &nbsp;</strong> </label><span class="badge badge-pill badge-rose">   @Html.DisplayFor(modelItem => item.Marca.nombre)</span>
+                </p>
+            </div>
+            <div class="card-footer justify-content-between">
+                <div class="price-container">
+                    <span class="price">@Html.DisplayFor(modelItem => item.precio)</span>
+                </div>
+                <button class="btn btn-rose btn-link btn-fab btn-fab-mini btn-round pull-right" rel="tooltip" title="" data-placement="left" data-original-title="Remove from wishlist">
+                    <i class="material-icons">favorite</i>
+                </button>
+            </div>
+        </div>
+        <!-- end card -->
+    </div>
+}
+@if (Model.Count() <= 0)
+{
+    <div class="col-md-12">
+        <div class="alert alert-info">
+            <div class="container">
+                <div class="alert-icon">
+                    <i class="material-icons">info_outline</i>
+                </div>
+                <button class="close" aria-label="Close" type="button" data-dismiss="alert">
+                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                </button>
+                <b>Informacion:</b> No hay productos de esta categoria.
+            </div>
+        </div>
+    </div>
+}

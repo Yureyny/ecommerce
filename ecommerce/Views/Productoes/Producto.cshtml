@@ -1,0 +1,178 @@
+﻿@model ecommerce.Models.Producto
+
+@{
+    ViewBag.Title = "Producto";
+}
+
+<div class="page-header header-filter" data-parallax="true" filter-color="rose" style="background-image: url('/Content/assets/img/bg6.jpg');">
+    <div class="container">
+
+        <div class="row title-row">
+            <div class="col-md-4 ml-auto">
+                <a href="@Url.Action("Index", "ListaDeseos")" class="btn btn-white float-right"><i class="material-icons">remove_red_eye</i> Ver lista de deseos</a>
+               
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section section-gray">
+    <div class="container">
+        <div class="main main-raised main-product">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <img width="500" height="600" src="@Url.Action("getImage","Productoes",new { id=  @Html.DisplayFor(model => model.producto_id)})">
+
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <h2 class="title">  @Html.DisplayFor(model => model.nombre) </h2>
+                    <h3 class="main-price">  @Html.DisplayFor(model => model.precio)</h3>
+                    <span class="text-rose"><i class="material-icons">assessment</i> &nbsp;Descripción <i class="material-icons fa-pull-right">keyboard_arrow_down</i></span>
+                    <hr />
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Categoria</th>
+                                    <th>Marca</th>
+                                    <th class="text-center">Size</th>
+                                    <th>Color</th>
+                                    <th class="text-center">Sexo</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td>@Html.DisplayFor(model => model.Categoria.nombre)</td>
+                                    <td>@Html.DisplayFor(model => model.Marca.nombre)</td>
+                                    <td class="text-center">@Html.DisplayFor(model => model.size)</td>
+                                    <td>@Html.DisplayFor(model => model.Categoria.nombre)</td>
+                                    <td class="text-center">@Html.DisplayFor(model => model.sexo)</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <span class="text-rose"><i class="material-icons">local_shipping</i>&nbsp; Disponibilidad de  Envío <i class="material-icons fa-pull-right">keyboard_arrow_down</i></span>
+                    <hr />
+                    <ul class="links-vertical">
+                        <li>
+                            Envio Estándar 1-7 días laborables
+                        </li>
+                        <li>
+                            Envío Rápido 1-2 días laborables
+                        </li>
+
+
+                    </ul>
+
+                    <div class="row pull-right">
+                        <button class="btn btn-rose btn-round agregar_lista" productoId="@Html.DisplayFor(model => model.producto_id)">Agregar Lista de deseos &#xA0;<i class="material-icons">favorite_border</i></button>
+                        <button class="btn btn-primary btn-round agregar_carrito" productoId="@Html.DisplayFor(model => model.producto_id)">Agregar al carrito &#xA0;<i class="material-icons">shopping_cart</i></button>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                        <div id="mensaje_respuesta"></div>
+                </div>
+            </div>
+            </div>
+        <div class="features text-center">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="info">
+                        <div class="icon icon-info">
+                            <i class="material-icons">local_shipping</i>
+                        </div>
+                        <h4 class="info-title">Envios Rapidos </h4>
+                        <p>Fashop cuenta con los envios mas rapidos.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info">
+                        <div class="icon icon-success">
+                            <i class="material-icons">verified_user</i>
+                        </div>
+                        <h4 class="info-title">Politica Empresarial</h4>
+                        <p> Fashop Online cuenta con politicas de seguridad y confidencialidad paar asegurar los datos de los clientes.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info">
+                        <div class="icon icon-rose">
+                            <i class="material-icons">favorite</i>
+                        </div>
+                        <h4 class="info-title">Productos Populares</h4>
+                        <p>Fashop cuenta con productos altamente demandados en el mundo de la moda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+@Scripts.Render("~/bundles/jquery")
+<script>
+
+    $(document).ready(function () {
+        $(".agregar_lista").click(function () {
+            $('#mensaje_respuesta').html('');
+            var id1 = this.getAttribute("productoId");
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify({ "producto_id": parseInt(id1)}),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                url: '/Productoes/save_list',
+                success: function (respuesta) {
+                    var msg = `<div class="alert alert-`+respuesta.Class+` alert-dismissible fade show" role="alert">
+                                  <strong>Informacion: </strong> `+respuesta.Message+`
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>`;
+                   $('#mensaje_respuesta').html(msg);
+                },
+                error: function (respuesta) {
+                 
+                }
+            });
+        });
+        $(".agregar_carrito").click(function () {
+            $('#mensaje_respuesta').html('');
+            var id1 = this.getAttribute("productoId");
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify({ "producto_id": parseInt(id1),"cantidad":1  }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                url: '/Carritoes/Create',
+                success: function (respuesta) {
+                    var msg = `<div class="alert alert-`+respuesta.Class+` alert-dismissible fade show" role="alert">
+                                  <strong>Informacion: </strong> `+respuesta.Message+`
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>`;
+                   $('#mensaje_respuesta').html(msg);
+                },
+                error: function (respuesta) {
+                 
+                }
+            });
+        });
+
+
+    });
+
+
+</script>
+

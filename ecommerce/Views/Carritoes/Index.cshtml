@@ -1,0 +1,91 @@
+﻿@model IEnumerable<ecommerce.Models.Carrito>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="page-header header-filter" data-parallax="true" filter-color="rose" style="background-image: url('/Content/assets/img/bg6.jpg');">
+    <div class="container">
+
+        <div class="row title-row">
+            <div class="col-md-4 ml-auto">
+                <a href="@Url.Action("Index", "ListaDeseos")" class="btn btn-white float-right"><i class="material-icons">remove_red_eye</i> Ver lista de deseos</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section section-gray">
+    <div class="container">
+        <div class="main main-raised main-product">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <h4>Carrito de compra</h4>
+                    <hr />
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Producto
+                            </th>
+                            <th>
+                                Cantidad
+                            </th>
+                            <th>
+                                Marca
+                            </th>
+                            <th>
+                                Size
+                            </th>
+                            <th>
+
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Producto.nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.cantidad)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Producto.Marca.nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Producto.size)
+                                </td>
+                                <td>
+                                    <img width="140" height="150" src="@Url.Action("getImage","Productoes",new { id=   item.producto_id})" />
+
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Producto", "Productoes",new { id = item.producto_id })" class="btn btn-info btn-just-icon btn-sm">
+                                        <i class="material-icons">remove_red_eye</i>
+                                        <div class="ripple-container"></div>
+                                    </a>
+                                    <a href="@Url.Action("Delete", "Carritoes",new { id = item.carrito_id })" class="btn btn-danger btn-just-icon btn-sm">
+                                        <i class="material-icons">delete_forever</i>
+                                        <div class="ripple-container"></div>
+                                    </a> 
+                                    <a href="@Url.Action("Edit", "Carritoes",new { id = item.carrito_id })" class="btn btn-primary btn-just-icon btn-sm">
+                                        <i class="material-icons">edit</i>
+                                        <div class="ripple-container"></div>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+

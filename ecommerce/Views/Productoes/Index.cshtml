@@ -1,0 +1,90 @@
+﻿@model IEnumerable<ecommerce.Models.Producto>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="page-header header-filter" data-parallax="true" filter-color="rose" style="background-image: url('/Content/assets/img/bg6.jpg');">
+    <div class="container">
+
+
+    </div>
+</div>
+
+<div class="section section-gray">
+    <div class="container">
+        <div class="main main-raised main-product">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <p class="pull-right">
+                        @Html.ActionLink("Crear nuevo producto", "Create")
+                    </p>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Categoria.nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Marca.nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.precio)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.size)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.sexo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.imagen)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Categoria.nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Marca.nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.precio)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.size)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.sexo)
+                                </td>
+                                <td>
+                                    <img width="150" src="@Url.Action("getImage","Productoes",new { id=item.producto_id})" />
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.producto_id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.producto_id }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.producto_id })
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+

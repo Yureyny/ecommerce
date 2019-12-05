@@ -1,0 +1,77 @@
+﻿@model ecommerce.Models.Carrito
+
+@{
+    ViewBag.Title = "Edit";
+}
+    <div class="page-header header-filter" data-parallax="true" filter-color="rose" style="background-image: url('/Content/assets/img/bg6.jpg');">
+        <div class="container">
+
+            <div class="row title-row">
+                <div class="col-md-4 ml-auto">
+                    <a href="@Url.Action("Index", "Carritoes")" class="btn btn-white float-right"><i class="material-icons">shopping_cart</i> &nbsp; Editar el carrito</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section section-gray">
+        <div class="container">
+            <div class="main main-raised main-product">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <h4>Editar Carrito</h4>
+                        <hr />
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                                
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.carrito_id)
+
+                                <div class="form-group">
+                                   <label class="control-label col-md-2">Producto</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("producto_id", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.producto_id, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group" hidden>
+                                    @Html.LabelFor(model => model.ApplicationUserId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ApplicationUserId, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ApplicationUserId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.cantidad, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.cantidad, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.cantidad, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Save" class="btn btn-success" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                        <div>
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+

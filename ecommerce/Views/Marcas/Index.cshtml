@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ecommerce.Models.Marca>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="page-header header-filter" data-parallax="true" filter-color="rose" style="background-image: url('/Content/assets/img/bg6.jpg');">
+    <div class="container">
+
+       
+    </div>
+</div>
+<div class="section section-gray">
+    <div class="container">
+        <div class="main main-raised main-product">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <h2>Index</h2>
+
+                    <p>
+                        @Html.ActionLink("Create New", "Create")
+                    </p>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nombre)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.nombre)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.marca_id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.marca_id }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.marca_id })
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>

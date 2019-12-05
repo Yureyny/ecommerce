@@ -1,0 +1,176 @@
+﻿@model IEnumerable<ecommerce.Models.Producto>
+
+@{
+    ViewBag.Title = "catalogo";
+}
+
+@Html.AntiForgeryToken()
+<div class="page-header header-filter header-small" data-parallax="true" style="background-image: url('/Content/assets/img/examples/clark-street-merc.jpg');">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 ml-auto mr-auto text-center">
+                <div class="brand">
+                    <h1 class="title">Fashop Tienda Virtual</h1>
+                    <h4>
+                        Donde encontraras los productos mas <b>demandados y con mayor calidad</b> del mundo de la moda
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main main-raised">
+
+    <div class="section">
+        <div class="container">
+           @* <h2 class="section-title">Busca lo que necesitas <i class="material-icons">search</i></h2>*@
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card card-refine card-plain card-rose">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <i class="material-icons">filter_list</i> Filtrar por
+
+                            </h4>
+                            <span class="text-rose">Categoria</span>
+                            <hr />
+                            <div id="div_categorias"></div>
+                            <hr />
+                            <span class="text-rose">Marcas</span>
+                            <hr />
+                            <div id="div_marcas"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row" id="row_productos">
+                      
+
+
+
+                            </div>
+
+                        </div>
+            </div>
+        </div>
+        <br>
+
+    </div>
+</div>
+<!-- section -->
+</div>
+<!-- end-main-raised -->
+<!-- section -->
+<div class="subscribe-line subscribe-line-image" data-parallax="true" style="background-image: url('/Content/assets/img/examples/ecommerce-header.jpg');">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 ml-auto mr-auto">
+                <div class="text-center">
+                    <h3 class="title">Subscribete para recibir noticias</h3>
+                    <p class="description">
+
+                        ¡Únase a nuestro boletín y reciba noticias en su bandeja de entrada todas las semanas! También odiamos el spam, así que no te preocupes por esto
+                    </p>
+                </div>
+                <div class="card card-raised card-form-horizontal">
+                    <div class="card-body">
+                        <form method="" action="">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="material-icons">mail</i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Your Email...">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <button type="button" class="btn btn-rose btn-block">Subscribe</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+<script>
+    function buscar_productos_parcial(categoria=0,marca=0) {
+     
+        $.ajax({
+            type: 'GET',
+            data: { "categoria_id": parseInt(categoria), "marca_id": parseInt(marca) },
+            url: '/Productoes/Producto_Parcial',
+            success: function (respuesta) {
+             
+                $("#row_productos").html(respuesta);
+            }
+
+        });
+    }
+    function buscar_categorias() {
+        var id1 = 0;
+        $.ajax({
+            type: 'GET',
+            data: JSON.stringify({ "producto_id": parseInt(id1) }),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            url: '/Categorias/ListaCategorias',
+            success: function (respuesta) {
+                var s = "";
+                for (var i = 0; i < respuesta.length; i++) {
+                    
+                  s += ' <label style="cursor:pointer;" class="filtro_categoria" categoria_id="'+respuesta[i].categoria_id+'">'+respuesta[i].categoria+'</label><br>';
+                }  
+               
+
+                $("#div_categorias").html(s);
+            }
+
+        });
+    }
+    function buscar_marcas() {
+        ;
+        $.ajax({
+            type: 'GET',
+            url: '/Marcas/ListaMarcas',
+            success: function (respuesta) {
+                var s = "";
+                for (var i = 0; i < respuesta.length; i++) {
+                    
+                  s += ' <label style="cursor:pointer;" class="filtro_marca" marca_id="'+respuesta[i].marca_id+'">'+respuesta[i].marca+'</label><br>';
+                }  
+               
+
+                $("#div_marcas").html(s);
+            }
+
+        });
+    }
+
+
+    $(document).ready(function () {
+        buscar_productos_parcial(0,0);
+        buscar_categorias();
+        buscar_marcas();
+    });
+
+    $(document).on("click", ".filtro_categoria", function () {
+        var categoria_id = this.getAttribute("categoria_id");
+        buscar_productos_parcial(categoria_id,0);
+    });
+    $(document).on("click", ".filtro_marca", function () {
+        var marca_id = this.getAttribute("marca_id");
+        buscar_productos_parcial(0,marca_id);
+    });
+
+
+</script>
+
